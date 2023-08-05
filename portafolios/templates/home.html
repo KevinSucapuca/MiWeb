@@ -1,0 +1,100 @@
+{% extends "./base.html" %}
+{% block title %} Inicio {% endblock %}
+
+<!-- Portfolio Section=============== -->
+
+	{% block section %}
+	<div class="row section-intro">
+		<div class="col-twelve">
+	
+			<h5>Portafolio</h5>
+			<p class="lead">¡Gracias por visitar mi portafolio! 
+				Aquí encontrarás una muestra de mi pasión por
+				el desarrollo de software y mi dedicación
+				para contribuir con soluciones efectivas y de calidad.</p>
+	
+		</div>   		
+	</div> <!-- /section-intro--> 
+	
+	<div class="row portfolio-content">
+		<div class="col-twelve">
+			<!-- portfolio-wrapper -->
+			<div id="folio-wrapper" class="folio-wrapper-container block-1-3 block-mob-full stack">
+				{% for proyecto in lista_proyecto %}
+				<div class="bgrid folio-item">
+					<div class="item-wrap">
+						<img src="{{ proyecto.url_imagen }}" alt="{{ proyecto.tipo_proyecto }}" class="centered-image">
+						<a href="#modal-{{ forloop.counter }}" class="overlay">
+							<div class="folio-item-table">
+								<div class="folio-item-cell">
+									<h3 class="folio-title">{{ proyecto.tipo_proyecto }}</h3>
+									<span class="folio-types">Más información</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+	
+				<div id="modal-{{ forloop.counter }}" class="popup-modal slider mfp-hide">
+					<div class="media">
+						<img src="{{ proyecto.url_imagen }}" alt="{{ proyecto.tipo_proyecto }}">
+					</div>
+	
+					<div class="description-box">
+						<h4>{{ proyecto.nombre_proyecto }}</h4>
+						<p>{{ proyecto.descripcion_proyecto|linebreaksbr }}</p>
+						<div class="categories">{{ proyecto.tipo_de_proyecto }}</div>
+					</div>
+	
+					<div class="link-box">
+						<a href="{{ proyecto.url_demo }}" target="_blank" >VER DEMO</a>
+	
+						<a href="{{ proyecto.url_github }}" target="_blank" >GITHUB</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	{% if lista_proyecto.has_other_pages %}
+	<div class="row mt-3 justify-content-center">
+	<nav>
+	<ul class="pagination pagination-sm justify-content-center" id="pagination">
+		{% if lista_proyecto.has_previous %}
+		<li class="page-item">
+		<a class="page-link" href="?page=1">Inicio</a>
+		</li>
+		<li class="page-item">
+		<a class="page-link" href="?page={{ lista_proyecto.previous_page_number }}">&laquo;</a>
+		</li>
+		{% endif %}
+		{% for proyecto in lista_proyecto.paginator.page_range %}
+		<li class="page-item{% if lista_proyecto.number == proyecto %} active {% endif %}">
+		<a class="page-link" href="?page={{ proyecto }}">{{ proyecto }}</a>
+		</li>
+		{% endfor %}
+		{% if lista_proyecto.has_next %}
+		<li class="page-item">
+		<a class="page-link" href="?page={{ lista_proyecto.next_page_number }}">&raquo;</a>
+		</li>
+		<li class="page-item">
+		<a class="page-link" href="?page={{ lista_proyecto.paginator.num_pages }}">Último</a>
+		</li>
+		{% endif %}
+	</ul>
+	</nav>
+</div>
+
+<script>
+	// Use JavaScript to maintain scroll position after changing the page
+	document.querySelectorAll('.page-link').forEach(link => {
+	link.addEventListener('click', (e) => {
+		e.preventDefault();
+		const url = link.getAttribute('href');
+		history.pushState(null, null, url);
+		window.location.reload();
+	});
+	});
+	</script>
+	{% endif %}
+	{% endblock %}
