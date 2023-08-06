@@ -55,3 +55,6 @@ def contact_form(request):
         return redirect('home')  # Redirigir a la página principal o donde desees
 
     return render(request, 'home.html')
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
