@@ -93,15 +93,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Por ejemplo, 'smtp.gmail.com' si usas Gmail
-EMAIL_PORT = 587  # Puerto del servidor SMTP (587 para TLS, 465 para SSL)
-EMAIL_USE_TLS = True  # Configura como False si usas SSL
-EMAIL_USE_SSL = False  # Configura como True si usas SSL
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  
+EMAIL_USE_TLS = True 
+EMAIL_USE_SSL = False 
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
+
 
 LANGUAGE_CODE = 'es-PE'
 
